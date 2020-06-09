@@ -19,7 +19,7 @@ import sys
 # Visa  205.96
 # Cash  455.51
 
-# Sum of all sales (values) is initialized with zero, we just started
+# Count of all sales (values) is initialized with zero, we just started
 count_of_values = 0
 
 # Previous key is initialized with None, we just started
@@ -41,12 +41,13 @@ for line in sys.stdin:
     # This means the line starts with a new key (key changes e.g. from "Visa" to "Cash")
     # Remember that our keys are sorted
     if previous_key != None and previous_key != key:
-        # Then write the result of the old key (Key=category, Value= Sum of Sales)
+        # Then write the result of the old key (Key=category, Value= Count of Sales)
         # to the standart output (stdout)
         # Key and value are seperated by a tab (\t)
         # Line ends with new line (\n)
-        sys.stdout.write("{0}\t{1}\n".format(previous_key, count_of_values))
-        # Sum of sales starts again with 0
+        if count_of_values > 114:
+            sys.stdout.write("{0}\t{1}\n".format(previous_key, count_of_values))
+        # Count of sales starts again with 0
         count_of_values = 0
 
     # Add the value to the total sales
@@ -58,4 +59,5 @@ for line in sys.stdin:
     previous_key = key
 
 # write the last result to stdout
-sys.stdout.write("{0}\t{1}\n".format(previous_key, count_of_values))
+if count_of_values > 114:
+    sys.stdout.write("{0}\t{1}\n".format(previous_key, count_of_values))
