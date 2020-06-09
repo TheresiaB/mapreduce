@@ -34,8 +34,19 @@ for line in sys.stdin:
     # the result is a tuple with 6 elements
     data = line.strip().split("\t")
 
-    # store the 6 elements of the tuple in seperate variables
+    if len(data) != 6:
+        raise ValueError('Missing Value')
+
+    # store the 6 elements of the tuple in seperate variable
     date, time, item, category, sales, payment = data
+#    if count(date, time, item, category, sales, payment) != 6:
+#        raise ValueError('Missing Value')
+
+#    try:
+#        date, time, item, category, sales, payment = data
+#    except ValueError:
+#        print('Missing Value')
+#        raise
 
     # Write the key-value combination to standard output (stdout)
     # Key is the payment, value is the sales     
