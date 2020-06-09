@@ -14,12 +14,13 @@ import sys
 # Cash  11.32
 # Cash  444.19
 
-# We want to sum all values with the same key
-# Example output data (Key=Payment, Value=Sum of Sales)
+# We want to avg all values with the same key
+# Example output data (Key=Payment, Value=Avg Sales)
 # Visa  205.96
 # Cash  455.51
 
-# Count of all sales (values) is initialized with zero, we just started
+# Sum and count of all sales (values) is initialized with zero, we just started
+sum_of_values = 0
 count_of_values = 0
 
 # Previous key is initialized with None, we just started
@@ -41,23 +42,25 @@ for line in sys.stdin:
     # This means the line starts with a new key (key changes e.g. from "Visa" to "Cash")
     # Remember that our keys are sorted
     if previous_key != None and previous_key != key:
-        # Then write the result of the old key (Key=category, Value= Count of Sales)
+        # Then write the result of the old key (Key=category, Value= Mean(Sum of Sales/Count of Sales))
         # to the standart output (stdout)
         # Key and value are seperated by a tab (\t)
         # Line ends with new line (\n)
         if count_of_values > 114:
-            sys.stdout.write("{0}\t{1}\n".format(previous_key, count_of_values))
-        # Count of sales starts again with 0
+            sys.stdout.write("{0}\t{1}\n".format(previous_key, sum_of_values/count_of_values))
+        # Sum and count of sales starts again with 0
+	sum_of_values = 0
         count_of_values = 0
 
     # Add the value to the total sales
     # a += b is the same as a = a + b
     # the float function transforms the value
     # to a float data type (like decimal)
+    sum_of_values += float(value)
     count_of_values += 1
     # the previous key for the next iteration is the current key of the this iteration 
     previous_key = key
 
 # write the last result to stdout
 if count_of_values > 114:
-    sys.stdout.write("{0}\t{1}\n".format(previous_key, count_of_values))
+    sys.stdout.write("{0}\t{1}\n".format(previous_key, sum_of_values/count_of_values))
